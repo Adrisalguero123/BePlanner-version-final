@@ -10,9 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.aplicacion_organizadora.R;
-import com.example.aplicacion_organizadora.ui.notes.Note;
-import com.example.aplicacion_organizadora.ui.recordatorios.Recordatorio;
-import com.example.aplicacion_organizadora.ui.tasks.Task;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,54 +27,53 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-        TextView noteTitle = root.findViewById(R.id.textNotaTitulo);
-        TextView noteBody = root.findViewById(R.id.textNotaCuerpo);
-        TextView reminderTitle = root.findViewById(R.id.textRecordatorioTitulo);
-        TextView reminderTime = root.findViewById(R.id.textRecordatorioFecha);
-        TextView taskDescription = root.findViewById(R.id.textTareaTitulo);
-        TextView taskStatus = root.findViewById(R.id.textTareaPrioridad);
+        // Referencias a los nuevos TextViews de las tarjetas
+        TextView recordatorioTitulo = root.findViewById(R.id.home_recordatorio_titulo);
+        TextView recordatorioFecha = root.findViewById(R.id.home_recordatorio_fecha);
+        TextView tareaTitulo = root.findViewById(R.id.home_tarea_titulo);
+        TextView tareaPrioridad = root.findViewById(R.id.home_tarea_prioridad);
+        TextView notaTitulo = root.findViewById(R.id.home_nota_titulo);
+        TextView notaCuerpo = root.findViewById(R.id.home_nota_cuerpo);
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-        homeViewModel.getLatestNote().observe(getViewLifecycleOwner(), note -> {
-            if (note != null) {
-                noteTitle.setText(note.title);
-                noteBody.setText(getPrimerasPalabras(note.body, 10));
-            } else {
-                noteTitle.setText("Sin notas");
-                noteBody.setText("");
-            }
-        });
+        // Observar y actualizar la tarjeta de recordatorio
         homeViewModel.getNextRecordatorio().observe(getViewLifecycleOwner(), recordatorio -> {
             if (recordatorio != null) {
-                reminderTitle.setText(recordatorio.titulo);
-                reminderTime.setText("Sonará: " + formatoFecha(recordatorio.fechaHoraAlarma));
+                recordatorioTitulo.setText(recordatorio.titulo);
+                recordatorioFecha.setText("Sonará: " + formatoFecha(recordatorio.fechaHoraAlarma));
+                recordatorioFecha.setVisibility(View.VISIBLE);
             } else {
-                reminderTitle.setText("Sin recordatorios");
-                reminderTime.setText("");
+                recordatorioTitulo.setText("Sin recordatorios próximos");
+                recordatorioFecha.setVisibility(View.GONE);
             }
         });
+
+        // Observar y actualizar la tarjeta de tarea
         homeViewModel.getTopTask().observe(getViewLifecycleOwner(), task -> {
             if (task != null) {
-                taskDescription.setText(getPrimerasPalabras(task.title, 10));
-                taskStatus.setText("Prioridad: " + task.priority);
+                tareaTitulo.setText(task.title);
+                tareaPrioridad.setText("Prioridad: " + task.priority);
+                tareaPrioridad.setVisibility(View.VISIBLE);
             } else {
-                taskDescription.setText("Sin tareas");
-                taskStatus.setText("");
+                tareaTitulo.setText("No hay tareas pendientes");
+                tareaPrioridad.setVisibility(View.GONE);
+            }
+        });
+
+        // Observar y actualizar la tarjeta de nota
+        homeViewModel.getLatestNote().observe(getViewLifecycleOwner(), note -> {
+            if (note != null) {
+                notaTitulo.setText(note.title);
+                notaCuerpo.setText(note.body);
+                notaCuerpo.setVisibility(View.VISIBLE);
+            } else {
+                notaTitulo.setText("No hay notas recientes");
+                notaCuerpo.setVisibility(View.GONE);
             }
         });
 
         return root;
-    }
-
-    private String getPrimerasPalabras(String texto, int maxPalabras) {
-        if (texto == null) return "";
-        String[] palabras = texto.split("\\s+");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < Math.min(maxPalabras, palabras.length); i++) {
-            sb.append(palabras[i]).append(" ");
-        }
-        return sb.toString().trim();
     }
 
     private String formatoFecha(long millis) {

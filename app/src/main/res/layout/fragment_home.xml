@@ -1,104 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#C1B0B4"
+    tools:context=".ui.home.HomeFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <!-- Card de Próximo Recordatorio -->
         <TextView
-            android:id="@+id/labelNotas"
+            style="@style/HomeCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Notas:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="8dp"/>
+            android:textColor="#FFFFFF" 
+            android:text="Próximo Recordatorio" />
 
-        <LinearLayout
-            android:id="@+id/blockNotas"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:background="@drawable/bg_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textNotaTitulo"
-                android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            style="@style/HomeCardView">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Título de nota"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textNotaCuerpo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Primeras 10 palabras..."/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/home_recordatorio_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin recordatorios próximos"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
+                <TextView
+                    android:id="@+id/home_recordatorio_fecha"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Sonará: 08/11/2025 22:17" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card de Próxima Tarea -->
         <TextView
-            android:id="@+id/labelTareas"
+            style="@style/HomeCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tareas:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:textColor="#FFFFFF" 
+            android:text="Próxima Tarea" />
 
-        <LinearLayout
-            android:id="@+id/blockTareas"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:background="@drawable/bg_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textTareaTitulo"
-                android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            style="@style/HomeCardView">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Título de tarea"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textTareaPrioridad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prioridad: Alta"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/home_tarea_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No hay tareas pendientes"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
-        <!-- Bloque Recordatorios -->
+                <TextView
+                    android:id="@+id/home_tarea_prioridad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Prioridad: Alta" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card de Última Nota -->
         <TextView
-            android:id="@+id/labelRecordatorios"
+            style="@style/HomeCardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Recordatorios:"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="16dp"
+            android:textColor="#FFFFFF" 
+            android:text="Última Nota" />
 
-        <LinearLayout
-            android:id="@+id/blockRecordatorios"
-            android:orientation="vertical"
-            android:padding="12dp"
-            android:background="@drawable/bg_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textRecordatorioTitulo"
-                android:layout_width="wrap_content"
+        <androidx.cardview.widget.CardView
+            style="@style/HomeCardView">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Título de recordatorio"/>
+                android:orientation="vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/textRecordatorioFecha"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sonará: 03/11/2025 12:15"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/home_nota_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No hay notas recientes"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
+
+                <TextView
+                    android:id="@+id/home_nota_cuerpo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    tools:text="Este es un extracto del cuerpo de la nota para tener una idea..." />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 </ScrollView>
