@@ -51,8 +51,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-dependencies {
-    implementation 'com.google.firebase:firebase-firestore:24.9.1'
-    implementation platform('com.google.firebase:firebase-bom:32.7.0')
-}
+    
+    // 🆕 DEPENDENCIAS DE FIREBASE - AGREGA ESTAS 2 LÍNEAS:
+    implementation("com.google.firebase:firebase-firestore:24.9.1")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
 }
