@@ -1,5 +1,9 @@
 package com.example.aplicacion_organizadora.ui.tasks;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
+import java.util.HashMap;
+import java.util.Map;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
