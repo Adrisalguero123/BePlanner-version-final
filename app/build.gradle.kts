@@ -38,6 +38,7 @@ android {
 
 dependencies {
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
+    implementation("com.google.firebase:firebase-auth:22.3.0")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
