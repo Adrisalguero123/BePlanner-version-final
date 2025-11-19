@@ -7,6 +7,7 @@ import java.util.Map;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,24 @@ public class TasksFragment extends Fragment {
 
         View btnAddTask = view.findViewById(R.id.btnAddTask);
         btnAddTask.setOnClickListener(v -> mostrarDialogoNuevaTarea());
+    }
+
+    // 🆕 MÉTODO NUEVO PARA FIREBASE
+    private void sincronizarConFirebase(String titulo, String descripcion, String prioridad) {
+        try {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            Map<String, Object> tarea = new HashMap<>();
+            tarea.put("titulo", titulo);
+            tarea.put("descripcion", descripcion);
+            tarea.put("prioridad", prioridad);
+            tarea.put("fecha", FieldValue.serverTimestamp());
+            tarea.put("llave", "miclave123");
+            
+            db.collection("tareas").add(tarea);
+            Log.d("Firebase", "✅ Tarea enviada a la web: " + titulo);
+        } catch (Exception e) {
+            Log.e("Firebase", "Error sincronizando: " + e.getMessage());
+        }
     }
 
     private void mostrarDialogoNuevaTarea() {
@@ -122,6 +141,9 @@ public class TasksFragment extends Fragment {
                     Task nuevaTarea = new Task(title, description, priority, ahora);
                     nuevaTarea.isDone = false;
                     viewModel.insert(nuevaTarea);
+
+                    // 🆕 LÍNEA NUEVA: Sincronizar con Firebase
+                    sincronizarConFirebase(title, description, priority);
 
                 })
                 .setNegativeButton("Cancelar", null)
@@ -189,6 +211,9 @@ public class TasksFragment extends Fragment {
                     tarea.priority = nuevaPrioridad;
 
                     viewModel.update(tarea);
+
+                    // 🆕 LÍNEA NUEVA: Sincronizar con Firebase al editar también
+                    sincronizarConFirebase(tarea.title, tarea.description, tarea.priority);
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
